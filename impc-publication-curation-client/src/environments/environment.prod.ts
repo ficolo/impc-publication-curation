@@ -4,12 +4,12 @@
 
 export const environment = {
   production: true,
-  baseUrl: 'http://wp-p3s-41.ebi.ac.uk/publications/',
-  publicationsApiUrl: 'http://wp-p3s-41.ebi.ac.uk:28080/graphql',
-  alleleApiUrl: 'http://wp-p3s-41.ebi.ac.uk:28080/alleles',
-  authUrl: 'http://wp-p3s-41.ebi.ac.uk:28080/token/generate-token',
-  harvesterUrl: 'http://wp-p3s-41.ebi.ac.uk:8000/harvest',
-  submissionUrl: 'http://wp-p3s-41.ebi.ac.uk:28080/submit',
+  baseUrl: 'https://www.ebi.ac.uk/mi/impc/publications/',
+  publicationsApiUrl: 'https://www.ebi.ac.uk/mi/impc/publications/api/graphql',
+  alleleApiUrl: 'https://www.ebi.ac.uk/mi/impc/publications/api/alleles',
+  authUrl: 'https://www.ebi.ac.uk/mi/impc/publications/api/token/generate-token',
+  harvesterUrl: 'https://www.ebi.ac.uk/mi/impc/publications/harvest',
+  submissionUrl: 'https://www.ebi.ac.uk/mi/impc/publications/api/submit',
   tokenKey: 'AuthToken',
   title: 'IMPC - Publications Curation',
   confirmViaEmail: false,

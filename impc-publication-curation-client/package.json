@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "start-infrafrontier": "ng serve --configuration=infrafrontier",
-    "build": "ng build --prod --base-href /publications/ --deploy-url /publications/",
+    "build": "ng build --prod --base-href /mi/impc/publications/ --deploy-url /mi/impc/publications/",
     "build-infrafrontier": "ng build --configuration=infrafrontier-prod --base-href /mi/infrafrontier/publications/ --deploy-url /mi/infrafrontier/publications/",
     "test": "ng test",
     "lint": "ng lint",
