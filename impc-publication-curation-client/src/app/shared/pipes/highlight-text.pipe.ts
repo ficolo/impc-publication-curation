@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
 @Pipe({
-  name: 'highlightText'
+  name: 'highlightText',
 })
 export class HighlightTextPipe implements PipeTransform {
   static SINGLE_MATCH = 'singleMatch';
@@ -11,8 +11,8 @@ export class HighlightTextPipe implements PipeTransform {
 
   constructor(private domSanitizer: DomSanitizer) {}
   transform(
-    contentString: string = null,
-    stringToHighlight: string = null,
+    contentString: string = '',
+    stringToHighlight: string = '',
     option: string = 'singleAndStartsWithMatch',
     caseSensitive: boolean = false,
     highlightStyleName: string = 'search-highlight'
@@ -50,7 +50,7 @@ export class HighlightTextPipe implements PipeTransform {
       }
       const replaced = contentString.replace(
         regex,
-        match =>
+        (match) =>
           `<span class="${highlightStyleName}">${this.escapeHtml(match)}</span>`
       );
       return this.domSanitizer.bypassSecurityTrustHtml(replaced);
@@ -59,7 +59,7 @@ export class HighlightTextPipe implements PipeTransform {
     }
   }
 
-  escapeHtml(unsafe) {
+  escapeHtml(unsafe: string) {
     return unsafe
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
@@ -68,7 +68,7 @@ export class HighlightTextPipe implements PipeTransform {
       .replace(/'/g, '&#039;');
   }
 
-  unescapeHtml(unsafe) {
+  unescapeHtml(unsafe: string) {
     return unsafe
       .replace(/\&amp\;/g, '&')
       .replace(/\&lt\;/g, '<')

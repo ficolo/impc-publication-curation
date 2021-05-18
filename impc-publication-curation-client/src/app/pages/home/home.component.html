@@ -1,11 +1,12 @@
-<mat-tab-group mat-align-tabs="center" color="accent">
+<mat-tab-group mat-align-tabs="center" color="accent" #tabs>
   <mat-tab *ngFor="let category of categories">
     <ng-template mat-tab-label>
       <mat-icon class="tab-icon">{{ category.icon }}</mat-icon>
       <span>{{category.name}} ({{ category.count }})</span>
     </ng-template>
     <div class="tab-content">
-      <impc-publication-table [resultsLength]="category.count" [status]="category.status" [showActions]="showActions"></impc-publication-table>
+      <impc-publication-table [resultsLength]="category.count !== undefined ? category.count : 0"
+        [status]="category.status" [showActions]="showActions"></impc-publication-table>
     </div>
   </mat-tab>
 </mat-tab-group>

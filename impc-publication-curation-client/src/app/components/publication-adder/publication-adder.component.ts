@@ -6,15 +6,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { flatMap, catchError } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs';
 
-
 @Component({
   selector: 'impc-publication-adder',
   templateUrl: './publication-adder.component.html',
-  styleUrls: ['./publication-adder.component.scss']
+  styleUrls: ['./publication-adder.component.scss'],
 })
 export class PublicationAdderComponent {
   harvesting = false;
-  response = { pmid: null, error: null, status: null };
+  response = { pmid: '', error: '', status: '' };
 
   constructor(
     public dialogRef: MatDialogRef<PublicationAdderComponent>,
@@ -23,23 +22,23 @@ export class PublicationAdderComponent {
     private publications: PublicationService
   ) {}
 
-  submit(pmid) {
+  submit(pmid: string) {
     this.harvesting = true;
     this.dialogRef.disableClose = true;
     this.response.pmid = pmid;
     this.harvester
       .harvestReference(pmid, environment.harvestAlleles)
       .pipe(
-        flatMap(reference =>
+        flatMap((reference) =>
           this.publications.submitPublication(pmid, reference)
         ),
-        catchError(result => {
+        catchError((result) => {
           console.log(result.error);
           this.response.status = 'failed';
           return observableOf(result.error.message);
         })
       )
-      .subscribe(result => {
+      .subscribe((result) => {
         if (this.response.status === 'failed') {
           this.response.error = result;
         } else {

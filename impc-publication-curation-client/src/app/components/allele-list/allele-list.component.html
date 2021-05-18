@@ -1,26 +1,41 @@
 <form class="form" *ngIf="editable || alleles.length > 0">
-    <mat-form-field class="allele-chip-list">
-      <mat-chip-list #chipList>
-        <mat-chip *ngFor="let allele of alleles" [selectable]="selectable"
-        [removable]="editable" (removed)="remove(allele, textInput)" [ngClass]="{'candidate': allele.candidate}" [matTooltip]="allele.candidate ? 'Allele candidate' : ''">
+  <mat-form-field class="allele-chip-list">
+    <mat-chip-list #chipList>
+      <mat-chip
+        *ngFor="let allele of alleles"
+        [selectable]="selectable"
+        [removable]="editable"
+        (removed)="remove(allele)"
+        [ngClass]="{ candidate: allele.candidate }"
+        [matTooltip]="allele.candidate ? 'Allele candidate' : ''"
+      >
         {{ allele.alleleSymbol }}
         <mat-icon matChipRemove *ngIf="editable">cancel</mat-icon>
       </mat-chip>
-      <input [placeholder]="editable ? 'Add Allele...' : 'Alleles list'"
-      [matChipInputFor]="chipList"
-      [matChipInputAddOnBlur]="addOnBlur"
-      [matAutocomplete]="auto"
-      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      [formControl]="myControl" #textInput
-      (paste)="pasteEvent($event)"
-      [readonly]="!editable"
+      <input
+        [placeholder]="editable ? 'Add Allele...' : 'Alleles list'"
+        [matChipInputFor]="chipList"
+        [matChipInputAddOnBlur]="addOnBlur"
+        [matAutocomplete]="auto"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [formControl]="myControl"
+        #textInput
+        (paste)="pasteEvent($event)"
+        [readonly]="!editable"
       />
       <mat-icon matSuffix fontSet="fas" fontIcon="fa-dna"></mat-icon>
     </mat-chip-list>
-    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption (optionSelected)="addFromAutcomplete($event, textInput)">
-      <mat-option *ngFor="let option of filteredOptions|async" [value]="option">
-        <span>{{ option['alleleSymbol'] }}</span>
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      autoActiveFirstOption
+      (optionSelected)="addFromAutcomplete($event, textInput)"
+    >
+      <mat-option
+        *ngFor="let option of filteredOptions | async"
+        [value]="option"
+      >
+        <span>{{ option["alleleSymbol"] }}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  </form>
+</form>

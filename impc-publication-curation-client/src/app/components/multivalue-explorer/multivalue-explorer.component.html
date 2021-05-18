@@ -1,0 +1,27 @@
+<div fxLayout="column" fxLayoutAlign="center center" style="margin-top: 20px; margin-bottom: 20px;">
+  <mat-button-toggle-group name="viewStyle" aria-label="View Style" [(value)]="selectedView">
+    <mat-button-toggle *ngFor="let button of visualizationButtons" [value]="button.value">
+      <mat-icon>{{button.icon}}</mat-icon>&nbsp;{{button.label}}
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <impc-explore-line style="width: 80%;" *ngIf="selectedView === 'line'" [fieldToVisualize]="fieldToVisualize"
+    [fieldDisplayName]="fieldDisplayName"></impc-explore-line>
+  <impc-explore-pie style="width: 80%;" *ngIf="selectedView === 'pie'" [fieldToVisualize]="fieldToVisualize"
+    [fieldDisplayName]="fieldDisplayName"></impc-explore-pie>
+  <impc-explore-table style="width: 60%;" *ngIf="selectedView === 'table'" [fieldToVisualize]="fieldToVisualize"
+    [fieldDisplayName]="fieldDisplayName">
+  </impc-explore-table>
+  <impc-explore-bar style="width: 60%;" *ngIf="selectedView === 'bar-chart'" [fieldToVisualize]="fieldToVisualize"
+    [fieldDisplayName]="fieldDisplayName">
+  </impc-explore-bar>
+  <impc-explore-heatmap style="width: 60%;" *ngIf="selectedView === 'heatmap'" [fieldToVisualize]="fieldToVisualize"
+    [fieldDisplayName]="fieldDisplayName">
+  </impc-explore-heatmap>
+
+  <impc-explore-network style="width: 80%;" *ngIf="selectedView === 'network'" [fieldToVisualize]="fieldToVisualize"
+    [fieldDisplayName]="fieldDisplayName"></impc-explore-network>
+
+  <impc-explore-collaboration-map style="width: 80%;" *ngIf="selectedView === 'map'"></impc-explore-collaboration-map>
+
+</div>

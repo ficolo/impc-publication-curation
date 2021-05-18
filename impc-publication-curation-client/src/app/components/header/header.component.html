@@ -1,0 +1,40 @@
+<div class="header">
+  <mat-toolbar class="header-bar" [class.mat-elevation-z2]="true">
+    <div class="toolbar-container">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandsetObs | async">
+        <mat-icon aria-label="Filter menu toggle icon">menu</mat-icon>
+      </button>
+      <img src="{{ baseUrl }}assets/img/logo.png" class="header-logo" />
+      <span *ngIf="drawer && (isHandsetObs | async) === false" style="width: 155px;"></span>
+      <span class="toolbar-spacer"></span>
+      <mat-nav-list fxLayout="row" fxLayoutGap="25px">
+        <a mat-list-item routerLink="/home" routerLinkActive="active" color="accent">
+          <mat-icon>rule</mat-icon>&nbsp;Curate
+        </a>
+
+        <a mat-list-item routerLink="/explore" routerLinkActive="active">
+          <mat-icon>explore</mat-icon>&nbsp;Explore
+        </a>
+        <a mat-list-item routerLink="/admin" routerLinkActive="active" *ngIf="isLoggedIn">
+          <mat-icon>admin_panel_settings</mat-icon>&nbsp;Admin
+        </a>
+      </mat-nav-list>
+      <span class="toolbar-spacer"></span>
+      <div>
+        <div>Publications Curation</div>
+        <div>
+          <a mat-button routerLink="/login" *ngIf="!isLoggedIn">
+            <mat-icon>account_circle</mat-icon> Login
+          </a>
+          <a mat-button (click)="onLogout()" *ngIf="isLoggedIn">
+            <mat-icon>exit_to_app</mat-icon> Logout
+          </a>
+          <button mat-button>
+            <mat-icon>help_outline</mat-icon> Help
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-toolbar>
+</div>

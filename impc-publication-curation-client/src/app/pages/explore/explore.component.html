@@ -1,0 +1,99 @@
+<mat-tab-group mat-align-tabs="center" color="accent" #tabs>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">event</mat-icon>
+      <span>&nbsp;Publication year</span>
+    </ng-template>
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <impc-multivalue-explorer fieldToVisualize="pubYear" fieldDisplayName="Publication year"
+          [visualizationTypes]="['bar-chart', 'line' ,'table']">
+        </impc-multivalue-explorer>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">library_books</mat-icon>
+      <span>&nbsp;Journal</span>
+    </ng-template>
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <impc-multivalue-explorer fieldToVisualize="journalInfo.journal.title" fieldDisplayName="Journal title"
+          [visualizationTypes]="['bar-chart', 'pie', 'table']">
+        </impc-multivalue-explorer>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">savings</mat-icon>
+      <span>&nbsp;Grant agency</span>
+    </ng-template>
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <impc-multivalue-explorer fieldToVisualize="grantsList.agency" fieldDisplayName="Grant agency">
+        </impc-multivalue-explorer>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">vpn_key</mat-icon>
+      <span>&nbsp;Mesh terms</span>
+    </ng-template>
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <impc-multivalue-explorer fieldToVisualize="meshHeadingList" fieldDisplayName="Mesh term">
+        </impc-multivalue-explorer>
+      </div>
+    </ng-template>
+
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">science</mat-icon>
+      <span>&nbsp;Chemicals</span>
+    </ng-template>
+    <ng-template matTabContent>
+      <div class="tab-content">
+        <impc-multivalue-explorer fieldToVisualize="chemicalList.chemical.name" fieldDisplayName="Chemical">
+        </impc-multivalue-explorer>
+      </div>
+    </ng-template>
+
+  </mat-tab>
+  <!-- <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">coronavirus</mat-icon>
+      <span>&nbsp;Diseases</span>
+    </ng-template>
+    <div class="tab-content">
+
+    </div>
+  </mat-tab> -->
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">history_edu</mat-icon>
+      <span>&nbsp;Authors</span>
+    </ng-template>
+    <div class="tab-content">
+      <ng-template matTabContent>
+        <impc-multivalue-explorer fieldToVisualize="authorList.fullName" fieldDisplayName="Author">
+        </impc-multivalue-explorer>
+      </ng-template>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">business</mat-icon>
+      <span>&nbsp;Affiliations</span>
+    </ng-template>
+    <div class="tab-content">
+      <ng-template matTabContent>
+        <impc-multivalue-explorer fieldToVisualize="authorList.affiliation" fieldDisplayName="Affiliation">
+        </impc-multivalue-explorer>
+      </ng-template>
+    </div>
+  </mat-tab>
+</mat-tab-group>

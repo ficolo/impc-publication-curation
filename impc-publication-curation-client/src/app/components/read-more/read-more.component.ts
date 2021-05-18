@@ -3,40 +3,41 @@ import { Component, Input, ElementRef, OnChanges, OnInit } from '@angular/core';
 @Component({
   selector: 'impc-read-more',
   template: `
-    <div [innerHTML]="currentText | highlightText: keyword:'default'" class="read-more"></div>
-    <a
-      mat-button
-      *ngIf="!hideToggle"
-      (click)="toggleView()"
-      color="accent"
+    <div
+      [innerHTML]="currentText | highlightText: keyword:'default'"
+      class="read-more"
+    ></div>
+    <a mat-button *ngIf="!hideToggle" (click)="toggleView()" color="accent"
       >Read {{ isCollapsed ? 'more' : 'less' }}</a
     >
   `,
-  styles: [`
-  .read-more {
-    /* These are technically the same, but use both */
-    overflow-wrap: break-word;
-    word-wrap: break-word;
+  styles: [
+    `
+      .read-more {
+        /* These are technically the same, but use both */
+        overflow-wrap: break-word;
+        word-wrap: break-word;
 
-    -ms-word-break: break-all;
-    /* This is the dangerous one in WebKit, as it breaks things wherever */
-    word-break: break-all;
-    /* Instead use this non-standard one: */
-    word-break: break-word;
+        -ms-word-break: break-all;
+        /* This is the dangerous one in WebKit, as it breaks things wherever */
+        word-break: break-all;
+        /* Instead use this non-standard one: */
+        word-break: break-word;
 
-    /* Adds a hyphen where the word breaks, if supported (No Blink) */
-    -ms-hyphens: auto;
-    -moz-hyphens: auto;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-  }
-  `]
+        /* Adds a hyphen where the word breaks, if supported (No Blink) */
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+      }
+    `,
+  ],
 })
 export class ReadMoreComponent implements OnChanges {
-  @Input() text: string;
-  @Input() keyword: string;
+  @Input() text = '';
+  @Input() keyword = '';
   @Input() maxLength = 100;
-  currentText: string;
+  currentText = '';
   hideToggle = true;
 
   public isCollapsed = true;

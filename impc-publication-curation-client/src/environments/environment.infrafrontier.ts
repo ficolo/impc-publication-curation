@@ -4,52 +4,55 @@
 
 export const environment = {
   production: false,
-  baseUrl: '',
-  publicationsApiUrl: 'http://localhost:8080/graphql',
-  alleleApiUrl: 'http://localhost:8080/alleles',
-  authUrl: 'http://localhost:8080/token/generate-token',
-  harvesterUrl: 'http://localhost:8000/harvest',
-  submissionUrl: 'http://localhost:8080/submit',
-  tokenKey: 'AuthToken',
-  title: 'INFRAFRONTIER - Publications Curation',
+  baseUrl: "",
+  publicationsApiUrl: "http://localhost:8080/graphql",
+  alleleApiUrl: "http://localhost:8080/alleles",
+  authUrl: "http://localhost:8080/token/generate-token",
+  harvesterUrl: "http://localhost:8000/harvest",
+  submissionUrl: "http://localhost:8080/submit",
+  exploreApiUrl: "http://localhost:8080/explore",
+  tokenKey: "AuthToken",
+  title: "INFRAFRONTIER - Publications Curation",
   confirmViaEmail: true,
   consortiumPaperMarker: false,
   showOrderID: true,
   harvestAlleles: true,
   filters: [
     {
-      field: 'publicationYear',
-      name: 'Publication year',
-      values: [1990, 2019],
-      type: 'range'
-    }
+      field: "publicationYear",
+      name: "Publication year",
+      from: 1990,
+      to: 2021,
+      type: "range",
+    },
   ],
   categories: [
     {
-      name: 'Pending',
-      status: 'pending',
-      icon: 'assignment',
-      color: 'warn'
+      name: "Pending",
+      status: "pending",
+      icon: "assignment",
+      color: "warn",
     },
     {
-      name: 'Waiting for email confirmation',
-      status: 'pendingEmailConfirmation',
-      icon: 'markunread_mailbox',
-      color: 'primary'
+      name: "Waiting for email confirmation",
+      status: "pendingEmailConfirmation",
+      icon: "markunread_mailbox",
+      color: "primary",
     },
     {
-      name: 'False positive',
-      status: 'falsePositive',
-      icon: 'assignment_late',
-      color: 'warn'
+      name: "False positive",
+      status: "falsePositive",
+      icon: "assignment_late",
+      color: "warn",
     },
     {
-      name: 'Reviewed',
-      status: 'reviewed',
-      icon: 'assignment_turned_in',
-      color: 'accent'
-    }
-  ]
+      name: "Reviewed",
+      status: "reviewed",
+      icon: "assignment_turned_in",
+      color: "accent",
+    },
+  ],
+  copyRightNotice: "2021 INFRAFRONTIER",
 };
 
 /*
@@ -59,4 +62,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+import "zone.js/dist/zone-error"; // Included with Angular CLI.

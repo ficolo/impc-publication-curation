@@ -1,4 +1,4 @@
-import { GraphQLResponse } from "./../models/publication.model";
+import { Allele, GraphQLResponse } from "./../models/publication.model";
 import { Observable, throwError } from "rxjs";
 import { Injectable, EventEmitter } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
@@ -7,6 +7,7 @@ import { map, catchError } from "rxjs/operators";
 import { Publication } from "../models/publication.model";
 import { merge, of as observableOf } from "rxjs";
 import { QueryHelper } from "./query.helper.util";
+import { Configuration } from "../models/configuration.model";
 
 @Injectable()
 export class PublicationService {
@@ -14,7 +15,7 @@ export class PublicationService {
 
   constructor(private http: HttpClient) {}
 
-  submitPublication = (pmid, reference) =>
+  submitPublication = (pmid: string, reference: any) =>
     this.http.post(`${environment.submissionUrl}/${pmid}`, reference);
 
   getPublications(
@@ -38,9 +39,9 @@ export class PublicationService {
         this.constructQuery(query.replace(new RegExp(/\n/, "g"), " "))
       )
       .pipe(
-        map((response: GraphQLResponse) =>
-          response.data.publications.map(publication => {
-            publication.fragments.forEach(fragment => {
+        map((response: any) =>
+          response.data.publications.map((publication: Publication) => {
+            publication.fragments.forEach((fragment) => {
               fragment.mentions.forEach((mention, index) => {
                 fragment.mentions[index] = mention
                   .replace(new RegExp("<", "g"), "&lt;")
@@ -48,10 +49,10 @@ export class PublicationService {
               });
             });
             if (publication.citations && publication.citations.length > 0) {
-              publication.citations.forEach(citation => {
+              publication.citations.forEach((citation) => {
                 publication.fragments.push({
                   keyword: citation.pmid,
-                  mentions: citation.references
+                  mentions: citation.references,
                 });
               });
             }
@@ -61,15 +62,15 @@ export class PublicationService {
             ) {
               publication.alleleCandidates
                 .filter(
-                  candidate =>
+                  (candidate) =>
                     !publication.alleles
-                      .map(allele => allele.name)
+                      .map((allele) => allele.name)
                       .includes(candidate.name)
                 )
-                .forEach(alleleCandidate => {
+                .forEach((alleleCandidate) => {
                   publication.alleles.push({
                     candidate: true,
-                    ...alleleCandidate
+                    ...alleleCandidate,
                   });
                 });
             }
@@ -79,8 +80,9 @@ export class PublicationService {
             ) {
               publication.fullTextUrlList = [
                 {
-                  url: "https://www.ncbi.nlm.nih.gov/pubmed/" + publication.pmid
-                }
+                  url:
+                    "https://www.ncbi.nlm.nih.gov/pubmed/" + publication.pmid,
+                },
               ];
             }
             return publication;
@@ -93,19 +95,19 @@ export class PublicationService {
     const query = `{ count(${this.parseFilter(filter)}) }`;
     return this.http
       .post(environment.publicationsApiUrl, this.constructQuery(query))
-      .pipe(map((result: GraphQLResponse) => result.data.count));
+      .pipe(map((result: any) => result.data.count));
   }
 
   setPublicationStatus(
-    pmid,
+    pmid: string,
     status = "",
-    alleles = [],
+    alleles: Array<Allele> = [],
     consortiumPaper = false,
     comment = ""
   ) {
     let allelesString = "";
-    alleles.forEach(allele => {
-      const alleleref = Object.assign({}, allele);
+    alleles.forEach((allele) => {
+      const alleleref: any = Object.assign({}, allele);
       delete alleleref.candidate;
       delete alleleref.id;
       allelesString += `{ ${this.objToString(alleleref)} }, `;
@@ -126,7 +128,7 @@ export class PublicationService {
         this.constructQuery(query.replace(new RegExp(/\n/, "g"), " "))
       )
       .pipe(
-        map((result: GraphQLResponse) => {
+        map((result: any) => {
           if (result.error && result.error.message === "Access denied") {
             throwError(result);
           } else {
@@ -139,7 +141,18 @@ export class PublicationService {
       );
   }
 
-  parseFilter(obj) {
+  getConfiguration(): Observable<Configuration> {
+    const queryHelper = new QueryHelper();
+    const query = `{ ${queryHelper.configurationQuery()} }`;
+    return this.http
+      .post(
+        environment.publicationsApiUrl,
+        this.constructQuery(query.replace(new RegExp(/\n/, "g"), " "))
+      )
+      .pipe(map((result: any) => result.data.configuration));
+  }
+
+  parseFilter(obj: any) {
     let str = "";
     for (const p in obj) {
       if (obj.hasOwnProperty(p)) {
@@ -160,7 +173,7 @@ export class PublicationService {
     return str.substring(0, str.length - 2);
   }
 
-  objToString(obj) {
+  objToString(obj: any) {
     let str = "";
     for (const p in obj) {
       if (obj.hasOwnProperty(p)) {
@@ -174,7 +187,7 @@ export class PublicationService {
     return str.substring(0, str.length - 2);
   }
 
-  constructQuery(queryStr) {
+  constructQuery(queryStr: string) {
     return `{"query":"${queryStr}","variables":null,"operationName":null}`;
   }
 }

@@ -1,45 +1,92 @@
 <mat-toolbar>Filter</mat-toolbar>
-<form [formGroup]="filterForm">
+<form *ngIf="filterForm" [formGroup]="filterForm">
   <div class="search-form">
     <mat-form-field>
-      <input matInput placeholder="Search" type="text" formControlName="search">
-      <mat-icon *ngIf="!filterForm.controls.search.value" matSuffix>search</mat-icon>
-      <button mat-button *ngIf="filterForm.controls.search.value" matSuffix mat-icon-button aria-label="Clear" (click)="filterForm.controls.search.reset()">
-          <mat-icon>close</mat-icon>
-        </button>
+      <input
+        matInput
+        placeholder="Search"
+        type="text"
+        formControlName="search"
+      />
+      <mat-icon *ngIf="!filterForm.controls.search.value" matSuffix
+        >search</mat-icon
+      >
+      <button
+        mat-button
+        *ngIf="filterForm.controls.search.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="filterForm.controls.search.reset()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-form-field>
   </div>
-  <mat-expansion-panel class="sidenav-section" [expanded]="filter.url === undefined" *ngFor="let filter of filters" >
+  <mat-expansion-panel
+    class="sidenav-section"
+    [expanded]="filter.url === undefined"
+    *ngFor="let filter of filters"
+  >
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{ filter.name }}
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <mat-selection-list dense *ngIf="filter.type === 'array'" formControlName="{{ filter.field }}">
+    <mat-selection-list
+      dense
+      *ngIf="filter.type === 'array'"
+      formControlName="{{ filter.field }}"
+    >
       <ng-container *ngIf="filter.url === undefined">
-        <mat-list-option *ngFor="let value of filter.values" color="primary" [value]="value">
+        <mat-list-option
+          *ngFor="let value of filter.values"
+          color="primary"
+          [value]="value"
+        >
           {{ value }}
         </mat-list-option>
       </ng-container>
       <ng-container *ngIf="filter.url !== undefined">
-        <mat-list-option *ngFor="let value of filter.values | async" color="primary" [value]="value">
+        <mat-list-option
+          *ngFor="let value of filter.values | async"
+          color="primary"
+          [value]="value"
+        >
           {{ value }}
         </mat-list-option>
       </ng-container>
     </mat-selection-list>
-    <mat-selection-list dense *ngIf="filter.type === 'boolean'" formControlName="{{ filter.field }}">
-      <mat-list-option *ngFor="let value of filter.values" color="primary" value="{{ value.field }}: true">
+    <mat-selection-list
+      dense
+      *ngIf="filter.type === 'boolean'"
+      formControlName="{{ filter.field }}"
+    >
+      <mat-list-option
+        *ngFor="let value of filter.values"
+        color="primary"
+        value="{{ value.field }}: true"
+      >
         {{ value.name }}
       </mat-list-option>
     </mat-selection-list>
     <div *ngIf="filter.type === 'range'">
       <mat-form-field class="range-form-field">
-        <input matInput placeholder="From" type="number" formControlName="{{ filter.field }}From">
+        <input
+          matInput
+          placeholder="From"
+          type="number"
+          formControlName="{{ filter.field }}From"
+        />
       </mat-form-field>
       <mat-form-field class="range-form-field">
-        <input matInput placeholder="To" type="number" formControlName="{{ filter.field }}To">
+        <input
+          matInput
+          placeholder="To"
+          type="number"
+          formControlName="{{ filter.field }}To"
+        />
       </mat-form-field>
     </div>
   </mat-expansion-panel>
 </form>
-

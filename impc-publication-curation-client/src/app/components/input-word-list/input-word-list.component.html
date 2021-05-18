@@ -1,0 +1,14 @@
+<h2>{{chipInput.title + 's' | titlecase}}</h2>
+<mat-form-field style="width: 80%; max-width: 800px">
+  <mat-chip-list #chipList>
+    <mat-chip *ngFor="let term of formControl?.value" (removed)="remove(term)">
+      {{term}}
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <input [placeholder]="'Add ' + chipInput.title + '...'" [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+      (matChipInputTokenEnd)="add($event)">
+  </mat-chip-list>
+  <mat-icon matSuffix>help_outline</mat-icon>
+  <mat-hint>{{chipInput.hint}}</mat-hint>
+</mat-form-field>

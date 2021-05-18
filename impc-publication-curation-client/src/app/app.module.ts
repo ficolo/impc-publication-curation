@@ -58,6 +58,26 @@ import { MatRadioModule } from "@angular/material/radio";
 import { PublicationAdderComponent } from "./components/publication-adder/publication-adder.component";
 import { MatDialogModule, MatDialog } from "@angular/material/dialog";
 import { InfrafrontierAlleleListComponent } from "./components/infrafrontier-allele-list/infrafrontier-allele-list.component";
+import { HeaderComponent } from "./components/header/header.component";
+import { AdminComponent } from "./pages/admin/admin.component";
+import { NoSidebarComponent } from "./layouts/no-sidebar/no-sidebar.component";
+import { ExploreComponent } from "./pages/explore/explore.component";
+import { AdminHarvestingComponent } from "./components/admin-harvesting/admin-harvesting.component";
+import { AdminUsersComponent } from "./components/admin-users/admin-users.component";
+import { InputWordListComponent } from "./components/input-word-list/input-word-list.component";
+import { AlleleTableComponent } from "./components/allele-table/allele-table.component";
+import { TagListComponent } from "./components/tag-list/tag-list.component";
+import { MultivalueExplorerComponent } from "./components/multivalue-explorer/multivalue-explorer.component";
+import { ExploreTableComponent } from "./components/explore-table/explore-table.component";
+import { ExploreBarComponent } from "./components/explore-bar/explore-bar.component";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { ExploreHeatmapComponent } from "./components/explore-heatmap/explore-heatmap.component";
+import { HeatMapComponent } from "./components/heatmap/heatmap.component";
+import { XAxisComponent } from "./components/x-axis/x-axis.component";
+import { ExploreNetworkComponent } from "./components/explore-network/explore-network.component";
+import { ExploreLineComponent } from "./components/explore-line/explore-line.component";
+import { ExplorePieComponent } from "./components/explore-pie/explore-pie.component";
+import { ExploreCollaborationMapComponent } from "./components/explore-collaboration-map/explore-collaboration-map.component";
 
 @NgModule({
   declarations: [
@@ -77,7 +97,26 @@ import { InfrafrontierAlleleListComponent } from "./components/infrafrontier-all
     LoginComponent,
     FooterComponent,
     PublicationAdderComponent,
-    InfrafrontierAlleleListComponent
+    InfrafrontierAlleleListComponent,
+    HeaderComponent,
+    AdminComponent,
+    NoSidebarComponent,
+    ExploreComponent,
+    AdminHarvestingComponent,
+    AdminUsersComponent,
+    InputWordListComponent,
+    AlleleTableComponent,
+    TagListComponent,
+    MultivalueExplorerComponent,
+    ExploreTableComponent,
+    ExploreBarComponent,
+    ExploreHeatmapComponent,
+    HeatMapComponent,
+    XAxisComponent,
+    ExploreNetworkComponent,
+    ExploreLineComponent,
+    ExplorePieComponent,
+    ExploreCollaborationMapComponent,
   ],
   imports: [
     BrowserModule,
@@ -114,7 +153,8 @@ import { InfrafrontierAlleleListComponent } from "./components/infrafrontier-all
     MatSnackBarModule,
     FlexLayoutModule,
     MatRadioModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxChartsModule,
   ],
   providers: [
     PublicationService,
@@ -126,10 +166,10 @@ import { InfrafrontierAlleleListComponent } from "./components/infrafrontier-all
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
   entryComponents: [PublicationAdderComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

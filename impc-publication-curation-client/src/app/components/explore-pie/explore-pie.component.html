@@ -1,0 +1,6 @@
+<div class="container">
+  <ngx-charts-pie-chart [scheme]="colorScheme" [labels]="showLabels" [legend]="false" [results]="single"
+    (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"
+    [maxLabelLength]="50" legendPosition="right">
+  </ngx-charts-pie-chart>
+</div>

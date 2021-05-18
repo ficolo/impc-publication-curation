@@ -1,45 +1,11 @@
-<div class="header">
-  <mat-toolbar class="header-bar" [class.mat-elevation-z2]="true">
-    <div class="toolbar-container">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async"
-      >
-        <mat-icon aria-label="Filter menu toggle icon">menu</mat-icon>
-      </button>
-      <img src="{{ baseUrl }}assets/img/logo.png" class="header-logo" />
-      <span class="toolbar-spacer"></span>
-      <div>
-        <div>Publications Curation</div>
-        <div>
-          <a mat-button routerLink="/login" *ngIf="!isLoggedIn">
-            <mat-icon>account_circle</mat-icon> Login
-          </a>
-          <a mat-button (click)="logout()" *ngIf="isLoggedIn" >
-            <mat-icon>exit_to_app</mat-icon> Logout
-          </a>
-          <button mat-button>
-            <mat-icon>help_outline</mat-icon> Help
-          </button>
-        </div>
-      </div>
-    </div>
-  </mat-toolbar>
-</div>
+<impc-header [isLoggedIn]="isLoggedIn" [isHandsetObs]="isHandset$" [baseUrl]="baseUrl" (logout)="logout()"
+  [drawer]="drawer">
+</impc-header>
 <div class="all-wrap">
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav
-      #drawer
-      class="sidenav"
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false"
-    >
-
-    <impc-filter [filters]="filters"></impc-filter>
+    <mat-sidenav #drawer class="sidenav" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+      <impc-filter [filters]="filters"></impc-filter>
     </mat-sidenav>
     <mat-sidenav-content class="page-wrap">
       <main class="content">
@@ -47,7 +13,7 @@
       </main>
       <div *ngIf="isLoggedIn" class="publication-adder">
         <button mat-fab (click)="openDialog()" color="accent" class="add-button">
-            <mat-icon>add</mat-icon>
+          <mat-icon>add</mat-icon>
         </button>
       </div>
       <footer>

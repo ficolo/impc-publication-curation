@@ -1,0 +1,78 @@
+<div fxLayout="column" fxLayoutAlign="center center" style="margin-top: 20px;">
+  <mat-accordion style="margin-bottom: 20px;">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <b>General harvesting and curation settings</b>
+        </mat-panel-title>
+        <mat-panel-description>
+          Configure the harvesting logic and the manual curation tags.
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <form [formGroup]="harvestingForm" style="min-width: 400px; width: 100%">
+        <p>Settings used for the automated process that harvest the candidates papers to be curated, list of alleles and
+          tags to be used on the manual curation process.</p>
+        <div>
+          <h2>Publication year range</h2>
+          <mat-form-field style="margin-right: 10px; max-width: 80px">
+            <mat-label>Year from</mat-label>
+            <input matInput type="number" formControlName="startYear" min="1900">
+          </mat-form-field>
+          <mat-form-field style="max-width: 80px">
+            <mat-label>Year to</mat-label>
+            <input matInput type="number" formControlName="endYear" min="1901">
+          </mat-form-field>
+        </div>
+        <div *ngFor="let chipInput of chipsInputFields" style="margin-top: 20px;">
+          <h2>{{chipInput.title + 's' | titlecase}}</h2>
+          <mat-form-field style="width: 80%; max-width: 800px">
+            <mat-chip-list #chipList [formControlName]="chipInput.controlName">
+              <mat-chip *ngFor="let term of harvestingForm.get(chipInput.controlName)?.value"
+                (removed)="remove(chipInput.controlName, term)">
+                {{term}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+              <input [placeholder]="'Add ' + chipInput.title + '...'" [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+                (matChipInputTokenEnd)="add(chipInput.controlName, $event)">
+            </mat-chip-list>
+            <mat-icon matSuffix>help_outline</mat-icon>
+            <mat-hint>{{chipInput.hint}}</mat-hint>
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <b>Allele list</b>
+        </mat-panel-title>
+        <mat-panel-description>
+          Manage the list of alleles used in the autocomplete and the EuropePMC search.
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div style="min-width: 400px; width: 100%; margin-top: 20px;">
+        <h2>Allele list</h2>
+        <impc-allele-table></impc-allele-table>
+        <mat-form-field class="file-upload">
+          <div>
+            <mat-toolbar>
+              <label></label>
+              <!-- Display files names -->
+              <input matInput [(ngModel)]="uploadAlleleFile" readonly name="name" placeholder="Load allele file..." />
+
+              <!-- Browse Button -->
+              <button mat-flat-button color="primary">
+                Browse File
+              </button>
+            </mat-toolbar>
+
+            <!-- Fetch selected filed on change -->
+            <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile"
+              multiple="multiple" accept="image/*" />
+          </div>
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

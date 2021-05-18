@@ -1,16 +1,16 @@
-import { AlleleAutocompleteService } from "./../../shared/services/allele-autocomplete.service";
-import { Component, OnInit, Input } from "@angular/core";
-import { ENTER, SEMICOLON } from "@angular/cdk/keycodes";
-import { Observable } from "rxjs";
-import { FormControl, FormArray, FormGroup } from "@angular/forms";
-import { startWith, mergeMap } from "rxjs/operators";
-import { MatChipInputEvent } from "@angular/material/chips";
-import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
-import { Allele } from "src/app/shared/models/publication.model";
+import { AlleleAutocompleteService } from './../../shared/services/allele-autocomplete.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { ENTER, SEMICOLON } from '@angular/cdk/keycodes';
+import { Observable } from 'rxjs';
+import { FormControl, FormArray, FormGroup } from '@angular/forms';
+import { startWith, mergeMap } from 'rxjs/operators';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { Allele } from 'src/app/shared/models/publication.model';
 @Component({
-  selector: "impc-infrafrontier-allele-list",
-  templateUrl: "./infrafrontier-allele-list.component.html",
-  styleUrls: ["./infrafrontier-allele-list.component.scss"]
+  selector: 'impc-infrafrontier-allele-list',
+  templateUrl: './infrafrontier-allele-list.component.html',
+  styleUrls: ['./infrafrontier-allele-list.component.scss'],
 })
 export class InfrafrontierAlleleListComponent implements OnInit {
   visible = true;
@@ -20,7 +20,7 @@ export class InfrafrontierAlleleListComponent implements OnInit {
   options = [];
   @Input()
   editable = false;
-  private _alleles = [];
+  private _alleles: Array<Allele> = [];
 
   filterListerners: Observable<any[]>[] = [];
 
@@ -42,29 +42,30 @@ export class InfrafrontierAlleleListComponent implements OnInit {
 
   ngOnInit() {
     if (this.alleles.length > 0) {
-      this.alleles.forEach(allele => {
+      this.alleles.forEach((allele) => {
         this.addFormFields(allele, allele.orderId, allele.emmaId);
       });
     } else {
       this.addFormFields();
     }
-    this.formFields.valueChanges.subscribe(value => {
+    this.formFields.valueChanges.subscribe((value) => {
       this.alleles.length = 0;
       this.alleles.push(
         ...value
-          .map(alleleForm => {
+          .map((alleleForm: any) => {
             const newAllele: Allele =
-              typeof alleleForm.alleleControl == "string"
+              typeof alleleForm.alleleControl == 'string'
                 ? { alleleSymbol: alleleForm.alleleControl }
                 : alleleForm.alleleControl;
             return {
               ...newAllele,
               orderId: alleleForm.orderIdControl,
-              emmaId: alleleForm.emmaIdControl
+              emmaId: alleleForm.emmaIdControl,
             };
           })
           .filter(
-            allele => allele.alleleSymbol || allele.orderId || allele.emmaId
+            (allele: Allele) =>
+              allele.alleleSymbol || allele.orderId || allele.emmaId
           )
       );
     });
@@ -75,30 +76,30 @@ export class InfrafrontierAlleleListComponent implements OnInit {
   }
 
   displayAllele(option: Allele) {
-    return option ? option.alleleSymbol : "";
+    return option ? option.alleleSymbol : '';
   }
-  addFormFields(allele = null, orderId = "", emmaIdControl = "") {
+  addFormFields(allele = null, orderId = '', emmaIdControl = '') {
     const alleleControl = new FormControl(allele);
     this.formFields.push(
       new FormGroup({
         alleleControl,
         orderIdControl: new FormControl(orderId),
-        emmaIdControl: new FormControl(emmaIdControl)
+        emmaIdControl: new FormControl(emmaIdControl),
       })
     );
 
     this.filterListerners.push(
       alleleControl.valueChanges.pipe(
-        startWith(""),
-        mergeMap(val => {
-          val = typeof val === "string" ? val : "";
+        startWith(''),
+        mergeMap((val) => {
+          val = typeof val === 'string' ? val : '';
           return this.filter(val);
         })
       )
     );
   }
 
-  removeFormField(index) {
+  removeFormField(index: number) {
     this.filterListerners.splice(index);
     this.formFields.removeAt(index);
   }

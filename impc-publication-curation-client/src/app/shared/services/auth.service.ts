@@ -5,17 +5,19 @@ import { Injectable, EventEmitter } from '@angular/core';
 
 @Injectable()
 export class AuthService {
-
   loggedIn = false;
   loggedOut: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private http: HttpClient, private tokenStorage: TokenStorage) { }
+  constructor(private http: HttpClient, private tokenStorage: TokenStorage) {}
 
-  login(user) {
-    return this.http.post(environment.authUrl, user).toPromise().then((data: TokenResponse) => {
-      this.tokenStorage.saveToken(data.token);
-      this.loggedIn = true;
-    });
+  login(user: any) {
+    return this.http
+      .post(environment.authUrl, user)
+      .toPromise()
+      .then((data: any) => {
+        this.tokenStorage.saveToken(data.token);
+        this.loggedIn = true;
+      });
   }
 
   isLoggedIn() {
@@ -26,9 +28,7 @@ export class AuthService {
     this.tokenStorage.signOut();
     this.loggedOut.emit(false);
   }
-
 }
-
 
 interface TokenResponse {
   token: any;

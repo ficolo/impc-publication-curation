@@ -3,8 +3,8 @@ export class QueryHelper {
     start = 1,
     size = 20,
     filter = {},
-    orderByField = 'firstPublicationDate',
-    orderByDirection = 'DESC'
+    orderByField = "firstPublicationDate",
+    orderByDirection = "DESC"
   ) => `{
     publications(start: ${start}, size: ${size}, orderBy: ${orderByField}_${orderByDirection}, ${filter}){
       title
@@ -15,6 +15,7 @@ export class QueryHelper {
       consortiumPaper
       status
       comment
+      meshHeadingList
       correspondence {
         authors
         emails
@@ -63,14 +64,14 @@ export class QueryHelper {
         alleleSymbol
       }
     }
-  }`
+  }`;
 
   setStatusQuery = (
-    pmid,
-    status = 'pending',
+    pmid: string,
+    status = "pending",
     consortiumPaper = false,
-    allelesString = '',
-    comment = ''
+    allelesString = "",
+    comment = ""
   ) => `
   mutation {
     updateReviewed(
@@ -78,11 +79,22 @@ export class QueryHelper {
     status: \\"${status}\\",
     alleles: ${allelesString},
     consortiumPaper: ${consortiumPaper},
-    comment: \\"${comment ? comment.replace(/\"/gi, '\\\\\\\"') : ''}\\",
+    comment: \\"${comment ? comment.replace(/\"/gi, '\\\\\\"') : ""}\\",
     alleleCandidates: []
     ){
       title
       status
     },
-  }`
+  }`;
+
+  configurationQuery = () => `
+  configuration {
+    creationDate
+    startYear
+    endYear
+    searchTerms
+    textKeywords
+    tags
+  }
+  `;
 }

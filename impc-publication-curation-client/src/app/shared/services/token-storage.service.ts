@@ -1,13 +1,11 @@
 import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TokenStorage {
-
-  constructor() { }
+  constructor() {}
 
   signOut() {
     window.sessionStorage.removeItem(environment.tokenKey);
@@ -16,10 +14,10 @@ export class TokenStorage {
 
   public saveToken(token: string) {
     window.sessionStorage.removeItem(environment.tokenKey);
-    window.sessionStorage.setItem(environment.tokenKey,  token);
+    window.sessionStorage.setItem(environment.tokenKey, token);
   }
 
-  public getToken(): string {
+  public getToken(): string | null {
     return sessionStorage.getItem(environment.tokenKey);
   }
 }

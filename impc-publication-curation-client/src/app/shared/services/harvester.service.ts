@@ -3,14 +3,16 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HarvesterService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {
-  }
-
-  harvestReference(pmid, useAlleles) {
-    return this.http.get(`${environment.harvesterUrl}/${pmid}${useAlleles ? '?useAlleles=true' : ''}`);
+  harvestReference(pmid: string, useAlleles: boolean) {
+    return this.http.get(
+      `${environment.harvesterUrl}/${pmid}${
+        useAlleles ? '?useAlleles=true' : ''
+      }`
+    );
   }
 }

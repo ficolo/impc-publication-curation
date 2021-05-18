@@ -4,63 +4,66 @@
 
 export const environment = {
   production: false,
-  baseUrl: '/',
-  publicationsApiUrl: 'http://localhost:8080/graphql',
-  alleleApiUrl: 'http://localhost:8080/alleles',
-  authUrl: 'http://localhost:8080/token/generate-token',
-  harvesterUrl: 'http://localhost:8000/harvest',
-  submissionUrl: 'http://localhost:8080/submit',
-  tokenKey: 'AuthToken',
-  title: 'IMPC - Publications Curation',
+  baseUrl: "/",
+  publicationsApiUrl: "http://localhost:8080/graphql",
+  alleleApiUrl: "http://localhost:8080/alleles",
+  authUrl: "http://localhost:8080/token/generate-token",
+  harvesterUrl: "http://localhost:8000/harvest",
+  submissionUrl: "http://localhost:8080/submit",
+  exploreApiUrl: "http://localhost:8080/explore",
+  tokenKey: "AuthToken",
+  title: "IMPC - Publications Curation",
   confirmViaEmail: false,
   consortiumPaperMarker: true,
   showOrderID: false,
   harvestAlleles: false,
   filters: [
     {
-      field: 'keywords',
-      name: 'Matched keyword',
-      values: ['EUCOMM', 'IMPC', 'KOMP'],
-      type: 'array'
+      field: "keywords",
+      name: "Matched keyword",
+      values: ["EUCOMM", "IMPC", "KOMP"],
+      type: "array",
     },
     {
-      field: 'provenance',
-      name: 'Provenance',
+      field: "provenance",
+      name: "Provenance",
       values: [
-        { name: 'Consortium paper', field: 'consortiumPaper' },
-        { name: 'Cites consortium paper', field: 'cites' }
+        { name: "Consortium paper", field: "consortiumPaper" },
+        { name: "Cites consortium paper", field: "cites" },
       ],
-      type: 'boolean'
+      type: "boolean",
     },
     {
-      field: 'publicationYear',
-      name: 'Publication year',
-      values: [1999, 2019],
-      type: 'range'
-    }
+      field: "publicationYear",
+      name: "Publication year",
+      from: 1999,
+      to: 2021,
+      type: "range",
+    },
     //{ field: 'journal', name: 'Journal', values: [], type: 'array', url: 'http://localhost:8080/journals' },
     //{ field: 'gene', name: 'Gene', values: [], type: 'array', url: 'http://localhost:8080/genes'}
   ],
   categories: [
     {
-      name: 'Pending',
-      status: 'pending',
-      icon: 'assignment',
-      color: 'warn'
+      name: "Pending",
+      status: "pending",
+      icon: "assignment",
+      color: "warn",
     },
     {
-      name: 'False positive',
-      status: 'falsePositive',
-      icon: 'assignment_late',
-      color: 'warn'
+      name: "False positive",
+      status: "falsePositive",
+      icon: "assignment_late",
+      color: "warn",
     },
     {
-      name: 'Reviewed',
-      status: 'reviewed',
-      icon: 'assignment_turned_in',
-      color: 'accent'
-    }
-  ]
+      name: "Reviewed",
+      status: "reviewed",
+      icon: "assignment_turned_in",
+      color: "accent",
+    },
+  ],
+  copyRightNotice: "2021 IMPC International Mouse Phenotyping Consortium.",
 };
 
 /*
@@ -70,4 +73,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-import 'zone.js/dist/zone-error'; // Included with Angular CLI.
+import "zone.js/dist/zone-error"; // Included with Angular CLI.

@@ -1,17 +1,18 @@
 export interface Allele {
-  acc: string;
-  gacc: string;
-  geneSymbol: string;
-  project: string;
-  alleleName: string;
+  acc?: string;
+  gacc?: string;
+  geneSymbol?: string;
+  project?: string;
+  alleleName?: string;
   alleleSymbol: string;
-  orderId: string;
-  emmaId: string;
+  orderId?: string;
+  emmaId?: string;
+  name?: string;
 }
 
 export interface FullTextUrlList {
   url: string;
-  documentStyle: string;
+  documentStyle?: string;
 }
 
 export interface GrantsList {
@@ -38,6 +39,11 @@ export interface Fragments {
   alleles: any[];
 }
 
+export interface Fragment {
+  keyword: string;
+  mentions: Array<string>;
+}
+
 export interface Correspondence {
   authors: string[];
   emails: string[];
@@ -55,7 +61,7 @@ export interface Publication {
   fullTextUrlList: FullTextUrlList[];
   grantsList: GrantsList[];
   journalInfo: JournalInfo;
-  fragments: Fragments;
+  fragments: Array<Fragment>;
   cites: any[];
   citations: any[];
   keyword: string;

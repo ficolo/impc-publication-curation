@@ -1,41 +1,82 @@
 <form [formGroup]="formGroup">
-  <div fxLayout="column" formArrayName="alleles" *ngFor="let i = index; let control of formFields.controls">
-      <div fxLayout="row" fxLayoutGap="5px" formGroupName="{{i}}">
-          <mat-form-field fxFlex="40" [ngClass]="formFields.controls[i].get('alleleControl').value?.candidate ? 'infrafrontier-allele-candidate' : null">
-              <input matInput placeholder="Select allele..."
-              type="text"
-              [matAutocomplete]="auto"
-              formControlName="alleleControl" #textInput
-              [readonly]="!editable"
-              />
-              <mat-icon matSuffix fontSet="fas" fontIcon="fa-dna"></mat-icon>
-            <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption [displayWith]="displayAllele">
-              <mat-option *ngFor="let option of filterListerners[i]|async" [value]="option">
-                <span>{{ option['alleleSymbol'] }}</span>
-              </mat-option>
-            </mat-autocomplete>
-            <mat-hint *ngIf="formFields.controls[i].get('alleleControl').value?.candidate">Allele candidate</mat-hint>
-          </mat-form-field>
-          <mat-form-field fxFlex="25">
-            <input matInput placeholder="Add order ID"
-            type="text"
-            formControlName="orderIdControl"
-            [readonly]="!editable"
-            />
-            <mat-icon matSuffix>receipt</mat-icon>
-          </mat-form-field>
-          <mat-form-field fxFlex="25">
-            <input matInput placeholder="Add EMMA ID"
-            type="text"
-            formControlName="emmaIdControl"
-            [readonly]="!editable"
-            />
-            <mat-icon matSuffix>fingerprint</mat-icon>
-          </mat-form-field>
-          <button mat-icon-button aria-label="Add allele button" (click)="removeFormField(i)" color="primary" *ngIf="formFields.length != 1">
-              <mat-icon>close</mat-icon>
-          </button>
-      </div>
+  <div
+    fxLayout="column"
+    formArrayName="alleles"
+    *ngFor="let i = index; let control; of: formFields.controls"
+  >
+    <div fxLayout="row" fxLayoutGap="5px" formGroupName="{{ i }}">
+      <mat-form-field
+        fxFlex="40"
+        [ngClass]="
+          formFields.controls[i].get('alleleControl')?.value?.candidate
+            ? 'infrafrontier-allele-candidate'
+            : ''
+        "
+      >
+        <input
+          matInput
+          placeholder="Select allele..."
+          type="text"
+          [matAutocomplete]="auto"
+          formControlName="alleleControl"
+          #textInput
+          [readonly]="!editable"
+        />
+        <mat-icon matSuffix fontSet="fas" fontIcon="fa-dna"></mat-icon>
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          autoActiveFirstOption
+          [displayWith]="displayAllele"
+        >
+          <mat-option
+            *ngFor="let option of filterListerners[i] | async"
+            [value]="option"
+          >
+            <span>{{ option["alleleSymbol"] }}</span>
+          </mat-option>
+        </mat-autocomplete>
+        <mat-hint
+          *ngIf="formFields.controls[i].get('alleleControl')?.value?.candidate"
+          >Allele candidate</mat-hint
+        >
+      </mat-form-field>
+      <mat-form-field fxFlex="25">
+        <input
+          matInput
+          placeholder="Add order ID"
+          type="text"
+          formControlName="orderIdControl"
+          [readonly]="!editable"
+        />
+        <mat-icon matSuffix>receipt</mat-icon>
+      </mat-form-field>
+      <mat-form-field fxFlex="25">
+        <input
+          matInput
+          placeholder="Add EMMA ID"
+          type="text"
+          formControlName="emmaIdControl"
+          [readonly]="!editable"
+        />
+        <mat-icon matSuffix>fingerprint</mat-icon>
+      </mat-form-field>
+      <button
+        mat-icon-button
+        aria-label="Add allele button"
+        (click)="removeFormField(i)"
+        color="primary"
+        *ngIf="formFields.length != 1"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
   </div>
 </form>
-<button mat-flat-button color="accent" (click)="addFormFields()" class="add-allele-btn">Add allele</button>
+<button
+  mat-flat-button
+  color="accent"
+  (click)="addFormFields()"
+  class="add-allele-btn"
+>
+  Add allele
+</button>

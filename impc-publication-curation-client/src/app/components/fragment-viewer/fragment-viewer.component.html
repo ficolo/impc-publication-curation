@@ -1,17 +1,33 @@
-<impc-keyword-list [keywords]="chips" (selectedKeyword)="filter($event)"></impc-keyword-list>
+<impc-keyword-list
+  [keywords]="chips"
+  (selectedKeyword)="filter($event)"
+></impc-keyword-list>
 <ng-container *ngFor="let keyword of keywords">
   <ng-container *ngIf="keyword === selectedKeyword">
-      <mat-horizontal-stepper labelPosition="bottom" class="fragment-viewer-stepper" *ngIf="fragmentMap[keyword].length > 1">
-          <ng-template matStepperIcon="edit" let-index="index">
-              {{index + 1}}
-            </ng-template>
-          <mat-step *ngFor="let item of fragmentMap[keyword] | slice:0:10">
-              <impc-read-more [text]="item" [maxLength]="1000" [keyword]="keyword"></impc-read-more>
-          </mat-step>
-        </mat-horizontal-stepper>
-        <div *ngIf="fragmentMap[keyword].length == 1" class="one-mention">
-            <impc-read-more [text]="fragmentMap[keyword][0]" [maxLength]="1000" [keyword]="keyword"></impc-read-more>
-        </div>
+    <mat-horizontal-stepper
+      labelPosition="bottom"
+      class="fragment-viewer-stepper"
+      *ngIf="getFragmentByKeyword(keyword).length > 1"
+    >
+      <ng-template matStepperIcon="edit" let-index="index">
+        {{ index + 1 }}
+      </ng-template>
+      <mat-step
+        *ngFor="let item of getFragmentByKeyword(keyword) | slice: 0:10"
+      >
+        <impc-read-more
+          [text]="item"
+          [maxLength]="1000"
+          [keyword]="keyword"
+        ></impc-read-more>
+      </mat-step>
+    </mat-horizontal-stepper>
+    <div *ngIf="getFragmentByKeyword(keyword).length == 1" class="one-mention">
+      <impc-read-more
+        [text]="getFragmentByKeyword(keyword)[0]"
+        [maxLength]="1000"
+        [keyword]="keyword"
+      ></impc-read-more>
+    </div>
   </ng-container>
-
 </ng-container>

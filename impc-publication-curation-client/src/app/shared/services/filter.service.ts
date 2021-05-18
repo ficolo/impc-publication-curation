@@ -1,16 +1,17 @@
 import { Injectable, EventEmitter } from '@angular/core';
+import { Filter } from 'src/app/components/filter/filter.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FilterService {
   filterChange: EventEmitter<any> = new EventEmitter();
   searchChange: EventEmitter<any> = new EventEmitter();
-  public filter = {};
+  public filter: Filter = {};
 
   constructor() {}
 
-  emitFilterChange(filter) {
+  emitFilterChange(filter: Filter) {
     this.filter = filter;
     this.filterChange.emit(filter);
   }
@@ -19,7 +20,7 @@ export class FilterService {
     return this.emitFilterChange;
   }
 
-  changeSearchValue(text) {
+  changeSearchValue(text: string) {
     this.searchChange.emit(text);
   }
 }

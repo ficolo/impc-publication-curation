@@ -1,0 +1,12 @@
+<impc-header [isLoggedIn]="isLoggedIn" [isHandsetObs]="isHandset$" [baseUrl]="baseUrl" (logout)="logout()">
+</impc-header>
+<div class="all-wrap">
+  <div class="page-wrap">
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+    <footer>
+      <impc-footer></impc-footer>
+    </footer>
+  </div>
+</div>
