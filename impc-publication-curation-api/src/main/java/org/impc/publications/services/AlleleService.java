@@ -30,7 +30,11 @@ public class AlleleService {
     public Iterable<Allele> findAll(){
         return alleleRepository.findAll(new PageRequest(0, 100));
     }
+    public Iterable<Allele> findAll(int page, int size){
+        return alleleRepository.findAll(new PageRequest(page, size));
+    }
     public Page<Allele> findBySymbol(String text) { return alleleRepository.findAllelesByAlleleSymbolContaining(text, new PageRequest(0, 100)); }
+    public Page<Allele> findBySymbol(String text, int page, int size) { return alleleRepository.findAllelesByAlleleSymbolContaining(text, new PageRequest(page, size)); }
     public List<String> getAlljournals() { return publicationRepository.getJournalNames(); }
     public List<String> getCitedGenes() { return publicationRepository.getCitedGenes(); }
 

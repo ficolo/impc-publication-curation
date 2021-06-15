@@ -1,12 +1,12 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 // Copy the palettes from your selected theme (usually theme.scss).
-$impc-publication-curation-client-primary: mat-palette($mat-orange);
-$impc-publication-curation-client-accent: mat-palette($mat-cyan, A700, A100, A400);
-$impc-publication-curation-client-warn: mat-palette($mat-red);
+$impc-publication-curation-client-primary: mat.define-palette(mat.$orange-palette);
+$impc-publication-curation-client-accent: mat.define-palette(mat.$cyan-palette, A700, A100, A400);
+$impc-publication-curation-client-warn: mat.define-palette(mat.$red-palette);
 
 
 // Create your Sass color vars (will be available in all the project)
-$primary: mat-color($impc-publication-curation-client-primary);
-$accent: mat-color($impc-publication-curation-client-accent);
-$warn: mat-color($impc-publication-curation-client-warn);
+$primary: mat.get-color-from-palette($impc-publication-curation-client-primary);
+$accent: mat.get-color-from-palette($impc-publication-curation-client-accent);
+$warn: mat.get-color-from-palette($impc-publication-curation-client-warn);

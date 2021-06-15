@@ -43,5 +43,7 @@ public class Publication {
     private ArrayList<Correspondence> correspondence;
     private String status;
     private String comment;
+    private ArrayList<String> meshHeadingList;
+    private ArrayList<String> tags;
 
 }

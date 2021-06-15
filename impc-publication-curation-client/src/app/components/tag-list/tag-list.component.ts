@@ -1,5 +1,13 @@
 import { ENTER, COMMA } from "@angular/cdk/keycodes";
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
 import { FormControl } from "@angular/forms";
 import {
   MatAutocomplete,
@@ -18,13 +26,20 @@ export class TagListComponent {
   visible = true;
   selectable = true;
   removable = true;
+
   separatorKeysCodes: number[] = [ENTER, COMMA];
   tagCtrl = new FormControl();
   filteredTags: Observable<string[]>;
+  @Input()
   tags: string[] = [];
-  allTags: string[] = ["Apple", "Lemon", "Lime", "Orange", "Strawberry"];
+  @Input()
+  tagOptions: string[] = [];
+  @Input()
+  editable = false;
 
-  @ViewChild("fruitInput") tagInput!: ElementRef<HTMLInputElement>;
+  @Output() tagsChange = new EventEmitter<Array<string>>();
+
+  @ViewChild("tagInput") tagInput!: ElementRef<HTMLInputElement>;
   @ViewChild("auto") matAutocomplete!: MatAutocomplete;
 
   constructor() {
@@ -38,9 +53,11 @@ export class TagListComponent {
     const input = event.input;
     const value = event.value;
 
+    this.tags = this.tags ? this.tags : [];
     // Add our fruit
     if ((value || "").trim()) {
       this.tags.push(value.trim());
+      this.tagsChange.emit(this.tags);
     }
 
     // Reset the input value
@@ -61,7 +78,9 @@ export class TagListComponent {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
+    this.tags = this.tags ? this.tags : [];
     this.tags.push(event.option.viewValue);
+    this.tagsChange.emit(this.tags);
     this.tagInput.nativeElement.value = "";
     this.tagCtrl.setValue(null);
   }
@@ -69,9 +88,11 @@ export class TagListComponent {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allTags.filter(
+    return this.tagOptions.filter(
       (tag) =>
-        !this.tags.includes(tag) && tag.toLowerCase().indexOf(filterValue) === 0
+        !this.tags ||
+        (!this.tags.includes(tag) &&
+          tag.toLowerCase().indexOf(filterValue) === 0)
     );
   }
 }

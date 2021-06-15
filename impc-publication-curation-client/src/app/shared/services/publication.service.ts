@@ -103,7 +103,8 @@ export class PublicationService {
     status = "",
     alleles: Array<Allele> = [],
     consortiumPaper = false,
-    comment = ""
+    comment = "",
+    tags: Array<string> = []
   ) {
     let allelesString = "";
     alleles.forEach((allele) => {
@@ -114,13 +115,16 @@ export class PublicationService {
     });
     allelesString =
       "[" + allelesString.substring(0, allelesString.length - 2) + "]";
+    const tagsString =
+      tags.length > 0 ? `[\\"${tags.join('\\",\\"')}\\"]` : "[]";
     const queryHelper = new QueryHelper();
     const query = queryHelper.setStatusQuery(
       pmid,
       status,
       consortiumPaper,
       allelesString,
-      comment
+      comment,
+      tagsString
     );
     return this.http
       .post(
@@ -149,6 +153,12 @@ export class PublicationService {
         environment.publicationsApiUrl,
         this.constructQuery(query.replace(new RegExp(/\n/, "g"), " "))
       )
+      .pipe(map((result: any) => result.data.configuration));
+  }
+
+  postConfiguration(configuration: Configuration): Observable<Configuration> {
+    return this.http
+      .post(`${environment.adminApiUrl}/configuration`, configuration)
       .pipe(map((result: any) => result.data.configuration));
   }
 

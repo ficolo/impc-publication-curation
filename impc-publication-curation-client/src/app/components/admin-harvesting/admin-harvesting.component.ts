@@ -82,4 +82,13 @@ export class AdminHarvestingComponent implements OnInit {
   uploadFileEvt(event: any) {
     console.log(event);
   }
+
+  updateConf() {
+    this.queryService
+      .postConfiguration(this.harvestingForm.value)
+      .subscribe((updatedConf) => {
+        delete updatedConf.creationDate;
+        this.harvestingForm.setValue(updatedConf);
+      });
+  }
 }

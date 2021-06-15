@@ -63,6 +63,7 @@ export class QueryHelper {
         alleleName
         alleleSymbol
       }
+      tags
     }
   }`;
 
@@ -71,13 +72,15 @@ export class QueryHelper {
     status = "pending",
     consortiumPaper = false,
     allelesString = "",
-    comment = ""
+    comment = "",
+    tagsString = ""
   ) => `
   mutation {
     updateReviewed(
     pmid: \\"${pmid}\\",
     status: \\"${status}\\",
     alleles: ${allelesString},
+    tags: ${tagsString},
     consortiumPaper: ${consortiumPaper},
     comment: \\"${comment ? comment.replace(/\"/gi, '\\\\\\"') : ""}\\",
     alleleCandidates: []

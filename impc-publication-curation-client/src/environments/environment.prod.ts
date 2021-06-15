@@ -12,6 +12,7 @@ export const environment = {
     "https://www.ebi.ac.uk/mi/impc/publications/api/token/generate-token",
   harvesterUrl: "https://www.ebi.ac.uk/mi/impc/publications/harvest",
   submissionUrl: "https://www.ebi.ac.uk/mi/impc/publications/api/submit",
+  adminApiUrl: "https://www.ebi.ac.uk/mi/impc/publications/api/admin",
   tokenKey: "AuthToken",
   title: "IMPC - Publications Curation",
   confirmViaEmail: false,

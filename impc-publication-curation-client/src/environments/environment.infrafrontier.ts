@@ -11,6 +11,7 @@ export const environment = {
   harvesterUrl: "http://localhost:8000/harvest",
   submissionUrl: "http://localhost:8080/submit",
   exploreApiUrl: "http://localhost:8080/explore",
+  adminApiUrl: "http://localhost:8080/admin",
   tokenKey: "AuthToken",
   title: "INFRAFRONTIER - Publications Curation",
   confirmViaEmail: true,

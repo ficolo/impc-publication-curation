@@ -12,10 +12,11 @@ type Query {
     publicationByPmid(pmid: String): Publication
     publicationsByReviewed(status: String, start: Int, size: Int): [Publication]
     count(status: String, keywords: [String], consortiumPaper: Boolean, alleles: Boolean, cites: Boolean, search: String, publicationYearFrom: Int, publicationYearTo: Int): Int
+    configuration: Configuration
 }
 
 type Mutation {
-    updateReviewed(pmid: String!, status: String, alleles: [AlleleRefInput], consortiumPaper: Boolean, alleleCandidates: [AlleleRefInput], comment: String): Publication
+    updateReviewed(pmid: String!, status: String, alleles: [AlleleRefInput], consortiumPaper: Boolean, alleleCandidates: [AlleleRefInput], comment: String, tags: [String]): Publication
 }
 
 type Publication {
@@ -43,6 +44,8 @@ type Publication {
     correspondence: [Correspondence]
     status: String
     comment: String
+    meshHeadingList: [String],
+    tags: [String]
 }
 
 type Correspondence {
@@ -166,4 +169,13 @@ type AlleleMention {
 type Citation {
   pmid: String
   references: [String]
+}
+
+type Configuration {
+    creationDate: String
+    startYear: Int
+    endYear: Int
+    searchTerms: [String]
+    textKeywords: [String]
+    tags: [String]
 }

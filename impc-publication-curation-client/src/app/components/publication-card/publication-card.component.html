@@ -47,7 +47,9 @@
           *ngIf="(!showOrderId && showActions) || (showOrderId && !showActions)" fxFlex="100"></impc-allele-list>
         <impc-infrafrontier-allele-list [alleles]="publication.alleles" [editable]="showActions"
           *ngIf="showOrderId && showActions" fxFlex="100"></impc-infrafrontier-allele-list>
-        <impc-tag-list fxFlex="80" style="margin-top: 10px;"></impc-tag-list>
+        <impc-tag-list *ngIf="tagOptions.length > 0 && showActions" [(tags)]="publication.tags" [editable]="showActions"
+          [tagOptions]="tagOptions" fxFlex="80" style="margin-top: 10px;">
+        </impc-tag-list>
       </div>
       <div fxFlex="35" fxLayout="col" *ngIf="showActions">
         <div fxFlex="100">

@@ -32,7 +32,8 @@
 
     <ng-container matColumnDef="cardCell">
       <td mat-cell *matCellDef="let element" class="card-cell">
-        <impc-publication-card [publication]="element" [showActions]="showActions"></impc-publication-card>
+        <impc-publication-card [tagOptions]="tagOptions" [publication]="element" [showActions]="showActions">
+        </impc-publication-card>
       </td>
     </ng-container>
     <tr mat-row *matRowDef="let row; columns: ['cardCell']"></tr>

@@ -81,6 +81,8 @@ export class ExploreNetworkComponent implements OnDestroy, AfterViewInit {
           container: this.container.nativeElement, // container to render in
 
           elements: this.network,
+          minZoom: 1e-1,
+          maxZoom: 1e1,
 
           style: [
             // the stylesheet for the graph
@@ -100,7 +102,7 @@ export class ExploreNetworkComponent implements OnDestroy, AfterViewInit {
                 width: 1,
                 "line-color": "#ccc",
                 "target-arrow-color": "#ccc",
-                "target-arrow-shape": "triangle",
+                "target-arrow-shape": "none",
                 "curve-style": "bezier",
               },
             },

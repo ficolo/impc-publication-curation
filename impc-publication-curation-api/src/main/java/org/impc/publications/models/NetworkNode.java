@@ -1,15 +1,18 @@
 package org.impc.publications.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PublicationCount {
-    @Id
-    private String value;
-    private Integer count;
+@Builder
+public class NetworkNode {
+    String id;
+    String name;
+    int count;
+    double lat;
+    double lon;
 }

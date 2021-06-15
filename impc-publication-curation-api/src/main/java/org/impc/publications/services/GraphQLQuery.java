@@ -2,8 +2,10 @@ package org.impc.publications.services;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import lombok.AllArgsConstructor;
+import org.impc.publications.models.Configuration;
 import org.impc.publications.models.Publication;
 import org.impc.publications.models.PublicationOrderBy;
+import org.impc.publications.repositories.ConfigurationRepository;
 import org.impc.publications.repositories.PublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -21,6 +23,10 @@ public class GraphQLQuery implements GraphQLQueryResolver {
 
     @Autowired
     private PublicationRepository publicationRepository;
+
+
+    @Autowired
+    private ConfigurationRepository configurationRepository;
 
     public List<Publication> getPublications(int start, int size, String status,
                                              ArrayList<String> keywords, Boolean consortiumPaper,
@@ -49,6 +55,10 @@ public class GraphQLQuery implements GraphQLQueryResolver {
 
     public Publication getPublicationByPmid(String pmid) {
         return publicationRepository.findPublicationByPmid(pmid);
+    }
+
+    public Configuration getConfiguration() {
+        return configurationRepository.findFirstByOrderByCreationDateDesc();
     }
 
     private Sort.Direction getDirection(PublicationOrderBy publicationOrderBy) {

@@ -1,10 +1,10 @@
-import { DataSource } from '@angular/cdk/collections';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { map } from 'rxjs/operators';
-import { Observable, of as observableOf, merge } from 'rxjs';
-import { Publication } from '../../shared/models/publication.model';
-import { PublicationService } from 'src/app/shared/services/publication.service';
+import { DataSource } from "@angular/cdk/collections";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { map } from "rxjs/operators";
+import { Observable, of as observableOf, merge } from "rxjs";
+import { Publication } from "../../shared/models/publication.model";
+import { PublicationService } from "src/app/shared/services/publication.service";
 
 /**
  * Data source for the PublicationsTable view. This class should
@@ -12,9 +12,9 @@ import { PublicationService } from 'src/app/shared/services/publication.service'
  * (including sorting, pagination, and filtering).
  */
 export class PublicationTableDataSource extends DataSource<Publication> {
-  data: Publication[];
-  paginator: MatPaginator;
-  sort: MatSort;
+  data!: Publication[];
+  paginator!: MatPaginator;
+  sort!: MatSort;
 
   constructor(private publicationService: PublicationService) {
     super();
@@ -28,10 +28,7 @@ export class PublicationTableDataSource extends DataSource<Publication> {
   connect(): Observable<any> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
-    const dataMutations = [
-      this.paginator.page,
-      this.sort.sortChange
-    ];
+    const dataMutations = [this.paginator.page, this.sort.sortChange];
 
     return merge(...dataMutations).pipe(
       map(() => {
@@ -52,7 +49,10 @@ export class PublicationTableDataSource extends DataSource<Publication> {
    */
   private getPagedAndSortedData() {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-    return this.publicationService.getPublications(startIndex, this.paginator.pageSize);
+    return this.publicationService.getPublications(
+      startIndex,
+      this.paginator.pageSize
+    );
   }
 
   /**
@@ -60,16 +60,16 @@ export class PublicationTableDataSource extends DataSource<Publication> {
    * this would be replaced by requesting the appropriate data from the server.
    */
   private getSortedData(data: Publication[]) {
-    if (!this.sort.active || this.sort.direction === '') {
+    if (!this.sort.active || this.sort.direction === "") {
       return data;
     }
 
     return data.sort((a, b) => {
-      const isAsc = this.sort.direction === 'asc';
+      const isAsc = this.sort.direction === "asc";
       switch (this.sort.active) {
-        case 'title':
+        case "title":
           return compare(a.title, b.title, isAsc);
-        case 'pmid':
+        case "pmid":
           return compare(+a.pmid, +b.pmid, isAsc);
         default:
           return 0;

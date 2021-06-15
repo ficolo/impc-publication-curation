@@ -49,6 +49,8 @@ export class PublicationTableComponent implements AfterViewInit, OnInit {
   @Input()
   status = "";
 
+  tagOptions: Array<string> = [];
+
   publications: Publication[] = [];
 
   constructor(
@@ -56,7 +58,11 @@ export class PublicationTableComponent implements AfterViewInit, OnInit {
     private filterService: FilterService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.publicationService.getConfiguration().subscribe((conf) => {
+      this.tagOptions = conf.tags;
+    });
+  }
 
   ngAfterViewInit() {
     if (this.sort && this.paginatorTop && this.paginatorBottom) {

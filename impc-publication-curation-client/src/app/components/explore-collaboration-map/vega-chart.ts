@@ -1,3 +1,4 @@
+import { environment } from "src/environments/environment";
 import embed, { Mode, VisualizationSpec } from "vega-embed";
 
 export async function mapChart(
@@ -27,7 +28,6 @@ export async function mapChart(
       {
         name: "title",
         value: "INFRAFRONTIER - Collaboration Network",
-        update: "hover ? hover.name : 'INFRAFRONTIER - Collaboration Network'",
       },
       {
         name: "tx",
@@ -169,11 +169,15 @@ export async function mapChart(
       },
       {
         name: "nodes",
+        format: {
+          type: "json",
+          property: "nodes",
+        },
         transform: [
           {
             type: "geopoint",
             projection: "projection",
-            fields: ["long", "lat"],
+            fields: ["lon", "lat"],
           },
           {
             type: "voronoi",
@@ -188,10 +192,14 @@ export async function mapChart(
             },
           },
         ],
-        url: "https://gist.githubusercontent.com/ficolo/ef6d7b646bc0082ed8d58688d1172e11/raw/de260a400e2b9ef4d453fc89c5d7f8cc285f67c3/infrafrontier_collaboration_network_nodes.json",
+        url: `${environment.exploreApiUrl}/affiliation-network`,
       },
       {
         name: "links",
+        format: {
+          type: "json",
+          property: "links",
+        },
         transform: [
           { type: "project", fields: ["source", "target"], as: ["src", "tgt"] },
           {
@@ -214,7 +222,7 @@ export async function mapChart(
             shape: "curve",
           },
         ],
-        url: "https://gist.githubusercontent.com/ficolo/ef6d7b646bc0082ed8d58688d1172e11/raw/de260a400e2b9ef4d453fc89c5d7f8cc285f67c3/infrafrontier_collaboration_network_links.json",
+        url: `${environment.exploreApiUrl}/affiliation-network`,
       },
     ],
     scales: [
@@ -225,7 +233,7 @@ export async function mapChart(
           data: "nodes",
           field: "count",
         },
-        range: [16, 1000],
+        range: [16, 800],
       },
     ],
     marks: [
@@ -269,13 +277,13 @@ export async function mapChart(
               value: "#eb5a07",
             },
             fillOpacity: {
-              value: 0.8,
+              value: 0.5,
             },
             stroke: {
               value: "white",
             },
             strokeWidth: {
-              value: 1.5,
+              value: 1.0,
             },
           },
           update: {
@@ -299,6 +307,12 @@ export async function mapChart(
             fill: {
               value: "transparent",
             },
+            tooltip: [
+              {
+                signal:
+                  "{'Institution': datum ? datum.name : null, 'Publications': datum ? datum.count : null}",
+              },
+            ],
           },
           update: {
             path: {
@@ -368,7 +382,7 @@ export async function mapChart(
   };
   const embedOpts = {
     actions: false,
-    mode: "vega-lite" as Mode,
+    mode: "vega" as Mode,
     defaultStyle: false,
   };
 

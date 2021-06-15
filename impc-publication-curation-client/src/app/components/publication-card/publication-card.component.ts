@@ -1,19 +1,19 @@
-import { environment } from './../../../environments/environment';
-import { PublicationService } from './../../shared/services/publication.service';
+import { environment } from "./../../../environments/environment";
+import { PublicationService } from "./../../shared/services/publication.service";
 import {
   Publication,
   Correspondence,
-} from './../../shared/models/publication.model';
-import { Component, OnInit, Input } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { of as observableOf } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { Category } from 'src/app/shared/models/category.model';
+} from "./../../shared/models/publication.model";
+import { Component, OnInit, Input } from "@angular/core";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { of as observableOf } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+import { Category } from "src/app/shared/models/category.model";
 
 @Component({
-  selector: 'impc-publication-card',
-  templateUrl: './publication-card.component.html',
-  styleUrls: ['./publication-card.component.scss'],
+  selector: "impc-publication-card",
+  templateUrl: "./publication-card.component.html",
+  styleUrls: ["./publication-card.component.scss"],
 })
 export class PublicationCardComponent implements OnInit {
   @Input()
@@ -21,6 +21,9 @@ export class PublicationCardComponent implements OnInit {
 
   @Input()
   showActions = false;
+
+  @Input()
+  tagOptions: Array<string> = [];
 
   showConsortiumCheck = true;
   showOrderId = false;
@@ -40,7 +43,7 @@ export class PublicationCardComponent implements OnInit {
     );
   }
 
-  setStatus(publicationStatus: string, status = '', undoing = false) {
+  setStatus(publicationStatus: string, status = "", undoing = false) {
     if (this.publication) {
       this.publicationService
         .setPublicationStatus(
@@ -48,7 +51,8 @@ export class PublicationCardComponent implements OnInit {
           publicationStatus,
           this.publication.alleles,
           this.publication.consortiumPaper,
-          this.publication.comment
+          this.publication.comment,
+          this.publication.tags
         )
         .pipe(
           map(() => observableOf(true)),
@@ -57,15 +61,15 @@ export class PublicationCardComponent implements OnInit {
         .subscribe((done) => {
           if (done) {
             this.openSnackBar(
-              `${undoing ? 'un' : ''}${
-                status === 'updated' ? '' : 'marked as '
+              `${undoing ? "un" : ""}${
+                status === "updated" ? "" : "marked as "
               }${status}`,
-              status === 'updated' || undoing,
+              status === "updated" || undoing,
               status
             );
           } else {
             this.openSnackBar(
-              'there was an error processing your request',
+              "there was an error processing your request",
               true,
               status
             );
@@ -75,12 +79,12 @@ export class PublicationCardComponent implements OnInit {
   }
 
   getMailTo(correspondence: Correspondence) {
-    const emails = correspondence.emails.join(',');
+    const emails = correspondence.emails.join(",");
     return `mailto:${emails}?subject=INFRAFRONTIER resource usage confirmation`;
   }
 
   openSnackBar(message: string, hideAction: boolean, status: string) {
-    const action = hideAction ? undefined : 'UNDO';
+    const action = hideAction ? undefined : "UNDO";
     message = message.charAt(0).toUpperCase() + message.slice(1);
     const snackBarRef = this.snackBar.open(message, action, {
       duration: 2000,

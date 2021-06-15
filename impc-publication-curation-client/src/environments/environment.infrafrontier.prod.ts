@@ -11,6 +11,7 @@ export const environment = {
   harvesterUrl: "/mi/infrafrontier/publications/api/harvest",
   submissionUrl: "/mi/infrafrontier/publications/api/submit",
   exploreApiUrl: "/mi/infrafrontier/publications/api/explore",
+  adminApiUrl: "/mi/infrafrontier/publications/api/admin",
   tokenKey: "AuthToken",
   title: "INFRAFRONTIER - Publications Curation",
   confirmViaEmail: true,
